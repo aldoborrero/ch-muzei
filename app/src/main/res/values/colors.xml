@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <color name="colorPrimary">#3F51B5</color>
+  <color name="colorPrimaryDark">#303F9F</color>
+  <color name="colorAccent">#FF4081</color>
+
+  <!-- Thanks! http://www.colourlovers.com/palette/100831/Calvins_Friend-->
+  <color name="hobbes">#F1C147</color>
+  <color name="calvin">#D43737</color>
+  <color name="coldwater">#30A8A8</color>
+  <color name="ebonic">#F0F0F0</color>
+  <color name="latenight">#4D3232</color>
+</resources>

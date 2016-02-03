@@ -1,0 +1,81 @@
+import org.moallemi.gradle.internal.VersionCodeType
+
+apply from: '../gradle/config/dependencies.gradle'
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'org.moallemi.advanced-build-version'
+
+def v = ext
+
+kapt {
+  generateStubs = true
+}
+
+android {
+  compileSdkVersion v.compileSdkVersion
+  buildToolsVersion v.buildToolsVersion
+
+  defaultConfig {
+    minSdkVersion v.minSdkVersion
+    targetSdkVersion v.targetSdkVersion
+    versionCode advancedVersioning.versionCode
+    versionName advancedVersioning.versionName
+
+    buildConfigField "String", "API_URL", '"https://lit-earth-7580.herokuapp.com/"'
+  }
+  signingConfigs {
+    release {
+      storeFile file("${System.getenv("CH_MUZEI_APP_PRIVATE_KEY")}")
+      keyAlias "${System.env.'CH_MUZEI_KEY_ALIAS'}"
+      storePassword "${System.env.'CH_MUZEI_STORE_PASSWORD'}"
+      keyPassword "${System.env.'CH_MUZEI_KEY_PASSWORD'}"
+    }
+  }
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_7
+    targetCompatibility JavaVersion.VERSION_1_7
+  }
+  buildTypes {
+    debug {
+      testCoverageEnabled = false
+    }
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+      signingConfig signingConfigs.release
+    }
+  }
+  sourceSets {
+    main.java.srcDirs += 'src/main/kotlin'
+  }
+}
+
+advancedVersioning {
+  outputOptions {
+    renameOutput false
+  }
+  codeOptions {
+    versionCodeType VersionCodeType.DATE
+  }
+  nameOptions {
+    versionMajor 1
+    versionMinor 0
+    versionPatch 0
+    //versionBuild 0
+  }
+}
+
+dependencies {
+  compile "com.android.support:appcompat-v7:$supportLibrariesVersion"
+  compile "com.android.support:support-annotations:$supportLibrariesVersion"
+  compile "com.google.android.apps.muzei:muzei-api:$muzeApiVersion"
+  compile "com.squareup.retrofit:retrofit:$retrofitVersion"
+  compile "javax.annotation:javax.annotation-api:$javaxAnnotationVersion"
+  compile "com.squareup.retrofit:converter-gson:$retrofitVersion"
+  compile("com.crashlytics.sdk.android:crashlytics:$fabricVersion") {
+    transitive = true;
+  }
+  compile "com.google.dagger:dagger:$daggerVersion"
+  kapt "com.google.dagger:dagger-compiler:$daggerVersion"
+  compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+}

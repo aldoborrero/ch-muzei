@@ -1,0 +1,35 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.aldoborrero.muzei.ch">
+
+  <uses-permission android:name="android.permission.INTERNET"/>
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+  <uses-permission android:name="android.permission.WAKE_LOCK"/>
+
+  <meta-data
+      android:name="io.fabric.ApiKey"
+      android:value="fa0aadf035c9682179e273ea2fde45f777d95ced"/>
+
+  <application
+      android:allowBackup="true"
+      android:label="@string/app_name"
+      android:icon="@mipmap/ic_launcher"
+      android:supportsRtl="false"
+      android:theme="@style/CalvinHobbes"
+      android:fullBackupContent="false">
+
+    <service
+        android:name=".muzei.CalvinHobbesArtSource"
+        android:label="@string/source_name"
+        android:description="@string/source_description"
+        android:icon="@drawable/ic_muzei_source">
+      <intent-filter>
+        <action android:name="com.google.android.apps.muzei.api.MuzeiArtSource"/>
+      </intent-filter>
+      <meta-data
+          android:name="color"
+          android:value="@color/latenight"/>
+    </service>
+
+  </application>
+
+</manifest>
